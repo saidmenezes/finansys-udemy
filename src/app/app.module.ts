@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { E404Component } from './pages/e404/e404.component';
 import { HomeComponent } from './pages/home/home.component';
+import { CategoryService } from './pages/categories/services/category.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { HomeComponent } from './pages/home/home.component';
     BrowserModule
     , AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    CategoryService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
