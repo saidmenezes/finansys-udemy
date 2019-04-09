@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, catchError, flatMap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
 import { Category } from '../models/category';
@@ -13,7 +13,7 @@ export class CategoryService {
   constructor(private pHttp: HttpClient) { }
 
   // Regiao de declaracao de variaveis
-  private pApiPath: string = 'api/categories';
+  private pApiPath: string = 'http://localhost:4200/api/' + 'CATEGORIES/';
 
   // Regiao de metodos publicos
   getAll(): Observable<Category[]> {
@@ -21,7 +21,7 @@ export class CategoryService {
   }
 
   getById(aId: number): Observable<Category> {
-    const URL = `$(this.pApiPath)/${aId}`;
+    const URL = this.pApiPath + aId;
     return this.pHttp.get(URL).pipe(catchError(this.handleError), map(this.jsonDataToCategory));
   }
 
@@ -30,12 +30,13 @@ export class CategoryService {
   }
 
   update(aCategory: Category): Observable<Category> {
-    const URL = `$(this.pApiPath)/${aCategory.id}`;
-    return this.pHttp.put(URL, aCategory).pipe(catchError(this.handleError), map(() => aCategory));;
+    const URL = this.pApiPath + aCategory;
+    return this.pHttp.put(URL, aCategory).pipe(catchError(this.handleError), map(() => aCategory));
   }
 
   delete(aId: number): Observable<any> {
-    const URL = `$(this.pApiPath)/${aId}`;
+    const URL = this.pApiPath + aId;
+    console.log('Tentou excluir : ', aId);
     return this.pHttp.delete(URL).pipe(catchError(this.handleError), map(() => null));
   }
 
